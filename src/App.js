@@ -1,69 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import logo from './logo.svg';
+import ToggleHook from './components/ToggleHook';
+import ToggleButton from './components/ToggleButton';
+import Clock from './components/Clock';
 import './App.css';
-
-function ToggleHook() {
-  const [isToggleOn, setIsToggleOn] = useState(true);
-
-  useEffect(() => {
-    // document.title = `Toggled: ${isToggleOn}`;
-    console.log(`Toggled: ${isToggleOn}`);
-  });
-
-  return (
-    <button onClick={() => setIsToggleOn(!isToggleOn)}>
-      {isToggleOn ? 'ON' : 'OFF'}
-    </button>
-  );
-}
-
-class ToggleButton extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { isToggleOn: true };
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick() {
-    this.setState(state => ({ isToggleOn: !state.isToggleOn }));
-  }
-
-  render() {
-    return (
-      <button onClick={this.handleClick}>
-        {this.state.isToggleOn ? 'ON' : 'OFF'}
-      </button>
-    );
-  }
-}
-
-class Clock extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { date: new Date() };
-  }
-
-  componentDidMount() {
-    this.timerID = setInterval(() => this.tick(), 1000);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.timerID);
-  }
-
-  tick() {
-    // correct way to set state if combining exist state with props
-    //  don't ever mix this.state with this.props
-    this.setState((state, props) => ({ date: new Date() }));
-
-    // if we don't need existing state or props, then can just overwrite state
-    // this.setState({ date: new Date() });
-  }
-
-  render() {
-    return <h2>{this.state.date.toLocaleTimeString()}</h2>;
-  }
-}
 
 function Welcome(props) {
   return (
