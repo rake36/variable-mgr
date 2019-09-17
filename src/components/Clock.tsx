@@ -1,10 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+
+// Hooks (preferred)
+function Clock() {
+  function tick() {
+    setDatetime(new Date());
+  }
+
+  const [datetime, setDatetime] = useState(new Date());
+  useEffect(() => {
+    let timerId = setInterval(tick, 1000);
+    return () => clearInterval(timerId);
+  });
+
+  return <h2>{datetime.toLocaleTimeString()}</h2>;
+}
 
 interface ClockState {
   date: Date;
 }
 
-class Clock extends React.Component<{}, ClockState> {
+// React.Component<props, state>
+class Clock2 extends React.Component<{}, ClockState> {
   timerID!: NodeJS.Timeout;
   constructor(props: Readonly<{}>) {
     super(props);
