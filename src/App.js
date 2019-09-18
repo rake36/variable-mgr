@@ -1,10 +1,19 @@
 import React from 'react';
+import { Route, withRouter } from 'react-router';
+
 // import logo from './logo.svg';
 // import ToggleHook from './components/ToggleHook';
 // import ToggleButton from './components/ToggleButton';
 // import Clock from './components/Clock';
 import Variable from './components/Variable';
-import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Form } from 'formik';
+// import './App.css';
+
+// TODO: Bootstrap layout
+// TODO: Ajax CRUD
+// TODO: Validation errors
+// TODO: Unit Tests
 
 // function Welcome(props) {
 //   return (
@@ -48,18 +57,8 @@ import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      {/* <div>
-        <Clock />
-        <ActionLink />
-        <ToggleButton />
-        <ToggleHook />
-      </div> */}
-      <header className="App-header">
-        {/* <Welcome user={user} />
-        <LearnReactLink /> */}
-        <Variable />
-      </header>
+    <div className="container">
+      <Variable />
     </div>
   );
 }

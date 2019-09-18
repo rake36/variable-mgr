@@ -7,6 +7,8 @@ import {
   Field,
   FieldProps,
 } from 'formik';
+import { Form as FormBS } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
 import * as Yup from 'yup';
 
 // Why not use Yup? Seems to work pretty well and integrated with Formik
@@ -38,21 +40,25 @@ const Variable = () => (
         actions.setSubmitting(false);
       }}
       render={(formikBag: FormikProps<VariableValues>) => (
-        <Form>
-          <label htmlFor="name">Variable Name</label>
+        <FormBS>
           <Field
             name="name"
             render={({ field, form }: FieldProps<VariableValues>) => (
-              <div>
-                <div>
-                  <input type="text" {...field} placeholder="Variable Name" />
-                  {form.touched.name && form.errors.name && form.errors.name}
-                </div>
-                <div>{form.submitCount}</div>
-              </div>
+              <FormBS.Group controlId="formVariableName">
+                <FormBS.Label>Variable Name</FormBS.Label>
+                <FormBS.Control
+                  type="text"
+                  {...field}
+                  placeholder="Variable Name"
+                  isInvalid={form.touched.name && !!form.errors.name}
+                ></FormBS.Control>
+                <FormBS.Control.Feedback type="invalid">
+                  {form.errors.name}
+                </FormBS.Control.Feedback>
+              </FormBS.Group>
             )}
           />
-        </Form>
+        </FormBS>
       )}
     ></Formik>
   </div>
