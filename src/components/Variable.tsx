@@ -1,17 +1,9 @@
 import React from 'react';
-import {
-  Formik,
-  FormikActions,
-  FormikProps,
-  Form,
-  Field,
-  FieldProps,
-} from 'formik';
-import { Form as FormBS } from 'react-bootstrap';
+import { Formik } from 'formik';
+import { Form, Col } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import * as Yup from 'yup';
 
-// Why not use Yup? Seems to work pretty well and integrated with Formik
 const VariableSchema = Yup.object().shape({
   id: Yup.string(),
   name: Yup.string()
@@ -20,47 +12,45 @@ const VariableSchema = Yup.object().shape({
     .required('Required'),
 });
 
-interface VariableValues {
-  id: string;
-  name: string;
-}
-
 const Variable = () => (
   <div>
     <h1>Variable</h1>
     <Formik
       initialValues={{ id: '', name: '' }}
       validationSchema={VariableSchema}
-      onSubmit={(
-        values: VariableValues,
-        actions: FormikActions<VariableValues>
-      ) => {
-        console.log({ values, actions });
-        alert(JSON.stringify(values, null, 2));
-        actions.setSubmitting(false);
-      }}
-      render={(formikBag: FormikProps<VariableValues>) => (
-        <FormBS>
-          <Field
-            name="name"
-            render={({ field, form }: FieldProps<VariableValues>) => (
-              <FormBS.Group controlId="formVariableName">
-                <FormBS.Label>Variable Name</FormBS.Label>
-                <FormBS.Control
-                  type="text"
-                  {...field}
-                  placeholder="Variable Name"
-                  isInvalid={form.touched.name && !!form.errors.name}
-                ></FormBS.Control>
-                <FormBS.Control.Feedback type="invalid">
-                  {form.errors.name}
-                </FormBS.Control.Feedback>
-              </FormBS.Group>
-            )}
-          />
-        </FormBS>
+      onSubmit={console.log}
+    >
+      {({
+        handleSubmit,
+        handleChange,
+        handleBlur,
+        values,
+        touched,
+        isValid,
+        errors,
+      }) => (
+        <Form noValidate onSubmit={handleSubmit}>
+          <Form.Row>
+            <Form.Group as={Col} md="4" controlId="formVariableName">
+              <Form.Label>Variable Name</Form.Label>
+              <Form.Control
+                type="text"
+                name="name"
+                value={values.name}
+                placeholder="Variable Name"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                isInvalid={touched.name && !!errors.name}
+              ></Form.Control>
+              <Form.Control.Feedback type="invalid">
+                {errors.name}
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Form.Row>
+          <Button type="submit">Submit</Button>
+        </Form>
       )}
-    ></Formik>
+    </Formik>
   </div>
 );
 
