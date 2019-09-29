@@ -3,22 +3,29 @@ import { Formik } from 'formik';
 import { Form } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import * as Yup from 'yup';
-import TextField from './TextField';
+import TextField from '../Form/TextField';
+import SelectField from '../Form/SelectField';
 
 const VariableSchema = Yup.object().shape({
-  id: Yup.string(),
-  name: Yup.string()
-    .min(2, 'Too short')
-    .max(255, 'Too long')
+  VariableId: Yup.number()
+    .typeError('Must be an integer')
+    .min(1, 'Min 1')
+    .max(999999, 'Max 999999')
     .required('Required'),
-  datatype: Yup.string(),
+  VariableName: Yup.string()
+    .min(2, 'At least two chars')
+    .max(255, '255 chars max')
+    .required('Required'),
+  VariableType: Yup.number()
+    .notOneOf([0], 'Pick a valid Type')
+    .required('Required'),
 });
 
 const Variable = () => (
   <div>
     <h1>Variable</h1>
     <Formik
-      initialValues={{ id: '', name: '', datatype: '' }}
+      initialValues={{ VariableId: '', VariableName: '', VariableType: '' }}
       validationSchema={VariableSchema}
       onSubmit={console.log}
     >
@@ -34,11 +41,11 @@ const Variable = () => (
         <Form noValidate onSubmit={handleSubmit}>
           <Form.Row>
             <TextField
-              controlId="ctrlVariableId"
-              md="4"
+              md="2"
               label="Id"
-              placeholder="Enter Variable Id"
-              fid="id"
+              placeholder="Id"
+              fid="VariableId"
+              maxLength={6}
               values={values}
               touched={touched}
               errors={errors}
@@ -46,23 +53,22 @@ const Variable = () => (
               handleBlur={handleBlur}
             />
             <TextField
-              controlId="ctrlVariableName"
-              md="4"
+              md="7"
               label="Name"
-              placeholder="Enter Variable Name"
-              fid="name"
+              placeholder="Variable Name"
+              fid="VariableName"
+              maxLength={255}
               values={values}
               touched={touched}
               errors={errors}
               handleChange={handleChange}
               handleBlur={handleBlur}
             />
-            <TextField
-              controlId="ctrlVariableType"
-              md="4"
+            <SelectField
+              md="3"
               label="Type"
-              placeholder="Enter Variable Type"
-              fid="datatype"
+              placeholder="Type"
+              fid="VariableType"
               values={values}
               touched={touched}
               errors={errors}

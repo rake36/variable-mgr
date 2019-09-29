@@ -4,7 +4,7 @@ import { Form, Col } from 'react-bootstrap';
 import { load, addDecorator } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { Button } from '@storybook/react/demo';
-import TextField from '../components/TextField';
+import TextField from '../components/Form/TextField';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import * as Yup from 'yup';
 

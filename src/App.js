@@ -1,6 +1,6 @@
 import React from 'react';
 // import { Route, withRouter } from 'react-router';
-import Variable from './components/Variable';
+import Variable from './components/Admin/Variable';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 // STARTED: Bootstrap layout using react-bootstrap

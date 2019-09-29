@@ -2,8 +2,7 @@ import React from 'react';
 import { Form, Col } from 'react-bootstrap';
 import { FormikErrors, FormikValues, FormikTouched } from 'formik';
 
-interface TextFieldProps {
-  controlId: string;
+interface SelectFieldProps {
   md: string;
   label: string;
   placeholder: string;
@@ -15,20 +14,26 @@ interface TextFieldProps {
   handleBlur: React.FormEventHandler<any>;
 }
 
-function TextField(props: TextFieldProps) {
+function SelectField(props: SelectFieldProps) {
   const fid = props.fid; // lookup into FormikValues dictionary
   return (
-    <Form.Group as={Col} md={props.md} controlId={props.controlId}>
+    <Form.Group as={Col} md={props.md} controlId={props.fid}>
       <Form.Label>{props.label}</Form.Label>
       <Form.Control
-        type="text"
+        as="select"
         name={fid}
         value={props.values[fid]}
         placeholder={props.placeholder}
         onChange={props.handleChange}
         onBlur={props.handleBlur}
         isInvalid={props.touched[fid] && !!props.errors[fid]}
-      ></Form.Control>
+      >
+        <option value="0">-- Select --</option>
+        <option value="1">String</option>
+        <option value="2">Integer</option>
+        <option value="3">Float</option>
+        <option value="4">Date/Time</option>
+      </Form.Control>
       <Form.Control.Feedback type="invalid">
         {props.errors[fid]}
       </Form.Control.Feedback>
@@ -36,4 +41,4 @@ function TextField(props: TextFieldProps) {
   );
 }
 
-export default TextField;
+export default SelectField;
