@@ -5,7 +5,6 @@ import { FormikErrors, FormikValues, FormikTouched } from 'formik';
 interface SelectFieldProps {
   md: string;
   label: string;
-  placeholder: string;
   fid: string;
   values: FormikValues;
   touched: FormikTouched<FormikValues>;
@@ -15,18 +14,28 @@ interface SelectFieldProps {
 }
 
 function SelectField(props: SelectFieldProps) {
-  const fid = props.fid; // lookup into FormikValues dictionary
+  const {
+    md,
+    label,
+    fid,
+    values,
+    touched,
+    errors,
+    handleChange,
+    handleBlur,
+    ...passProps
+  } = props; // lookup into FormikValues dictionary
   return (
-    <Form.Group as={Col} md={props.md} controlId={props.fid}>
-      <Form.Label>{props.label}</Form.Label>
+    <Form.Group as={Col} md={md} controlId={fid}>
+      <Form.Label>{label}</Form.Label>
       <Form.Control
         as="select"
         name={fid}
-        value={props.values[fid]}
-        placeholder={props.placeholder}
-        onChange={props.handleChange}
-        onBlur={props.handleBlur}
-        isInvalid={props.touched[fid] && !!props.errors[fid]}
+        value={values[fid]}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        isInvalid={touched[fid] && !!errors[fid]}
+        {...passProps}
       >
         <option value="0">-- Select --</option>
         <option value="1">String</option>
@@ -35,7 +44,7 @@ function SelectField(props: SelectFieldProps) {
         <option value="4">Date/Time</option>
       </Form.Control>
       <Form.Control.Feedback type="invalid">
-        {props.errors[fid]}
+        {errors[fid]}
       </Form.Control.Feedback>
     </Form.Group>
   );

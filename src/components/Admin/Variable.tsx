@@ -67,7 +67,6 @@ const Variable = () => (
             <SelectField
               md="3"
               label="Type"
-              placeholder="Type"
               fid="VariableType"
               values={values}
               touched={touched}
