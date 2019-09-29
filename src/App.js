@@ -5,10 +5,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 // STARTED: Bootstrap layout using react-bootstrap
 // STARTED: Validation errors
+// TODO: Field components? within Formik context?
 // TODO: Master/Detail
 // TODO: Ajax CRUD
 // TODO: Unit Tests
 // TODO: Router to change pages
+// TODO: storybook demos
 
 function App() {
   return (
