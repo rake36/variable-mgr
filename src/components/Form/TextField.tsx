@@ -28,7 +28,7 @@ function TextField(props: TextFieldProps) {
     ...passProps
   } = props; // lookup into FormikValues dictionary
   return (
-    <Form.Group as={Col} md={md} controlId={'ctrl' + fid}>
+    <Form.Group as={Col} md={md} controlId={fid}>
       <Form.Label>{label}</Form.Label>
       <Form.Control
         type="text"

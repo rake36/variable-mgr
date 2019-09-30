@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import * as Yup from 'yup';
 import TextField from '../Form/TextField';
 import SelectField from '../Form/SelectField';
+import DateField from '../Form/DateField';
 
 const VariableSchema = Yup.object().shape({
   VariableId: Yup.number()
@@ -19,13 +20,21 @@ const VariableSchema = Yup.object().shape({
   VariableType: Yup.number()
     .notOneOf([0], 'Pick a valid Type')
     .required('Required'),
+  VariableDate: Yup.date()
+    .typeError('Must be a Date')
+    .required('Required'),
 });
 
 const Variable = () => (
   <div>
     <h1>Variable</h1>
     <Formik
-      initialValues={{ VariableId: '', VariableName: '', VariableType: '' }}
+      initialValues={{
+        VariableId: '',
+        VariableName: '',
+        VariableType: '',
+        VariableDate: '',
+      }}
       validationSchema={VariableSchema}
       onSubmit={console.log}
     >
@@ -35,8 +44,8 @@ const Variable = () => (
         handleBlur,
         values,
         touched,
-        isValid,
         errors,
+        setFieldValue,
       }) => (
         <Form noValidate onSubmit={handleSubmit}>
           <Form.Row>
@@ -68,10 +77,30 @@ const Variable = () => (
               md="3"
               label="Type"
               fid="VariableType"
+              items={[
+                { text: '-- Select --', value: 0 },
+                { text: 'String', value: 1 },
+                { text: 'Integer', value: 2 },
+                { text: 'Float', value: 3 },
+                { text: 'Date/Time', value: 4 },
+              ]}
               values={values}
               touched={touched}
               errors={errors}
               handleChange={handleChange}
+              handleBlur={handleBlur}
+            />
+          </Form.Row>
+          <Form.Row>
+            <DateField
+              md="4"
+              label="Date"
+              placeholder="Date"
+              fid="VariableDate"
+              values={values}
+              touched={touched}
+              errors={errors}
+              setFieldValue={setFieldValue}
               handleBlur={handleBlur}
             />
           </Form.Row>

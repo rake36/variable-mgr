@@ -2,10 +2,16 @@ import React from 'react';
 import { Form, Col } from 'react-bootstrap';
 import { FormikErrors, FormikValues, FormikTouched } from 'formik';
 
+interface SelectItem {
+  text: string;
+  value: number;
+}
+
 interface SelectFieldProps {
   md: string;
   label: string;
   fid: string;
+  items: Array<SelectItem>;
   values: FormikValues;
   touched: FormikTouched<FormikValues>;
   errors: FormikErrors<FormikValues>;
@@ -18,6 +24,7 @@ function SelectField(props: SelectFieldProps) {
     md,
     label,
     fid,
+    items,
     values,
     touched,
     errors,
@@ -25,6 +32,13 @@ function SelectField(props: SelectFieldProps) {
     handleBlur,
     ...passProps
   } = props; // lookup into FormikValues dictionary
+
+  const options = items.map(data => (
+    <option key={data.value} value={data.value}>
+      {data.text}
+    </option>
+  ));
+
   return (
     <Form.Group as={Col} md={md} controlId={fid}>
       <Form.Label>{label}</Form.Label>
@@ -37,11 +51,7 @@ function SelectField(props: SelectFieldProps) {
         isInvalid={touched[fid] && !!errors[fid]}
         {...passProps}
       >
-        <option value="0">-- Select --</option>
-        <option value="1">String</option>
-        <option value="2">Integer</option>
-        <option value="3">Float</option>
-        <option value="4">Date/Time</option>
+        {options}
       </Form.Control>
       <Form.Control.Feedback type="invalid">
         {errors[fid]}
